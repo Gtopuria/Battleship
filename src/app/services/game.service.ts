@@ -24,22 +24,24 @@ export class GameService {
       }
     }
     this.RandomizeShips(cells);
-    return new Game(new Board(cells, new Player()));
+    return new Game(new Board(cells, new Player(), this.getFleet()), "In progress");
   }
 
-  private RandomizeShips(cells: any[]) {
+  private getFleet() {
     // Rules
     // 2 - 1 cell ships
     // 1 - L shaped 4 cell ship
     // 1 - I shaped 4 cell ship
-    const fleet = [
+    return [
       new Ship({ length: 4, type: ShipType.L }),
       new Ship({ length: 4, type: ShipType.Dot }),
       new Ship({ length: 1, type: ShipType.Dot }),
       new Ship({ length: 1, type: ShipType.Dot }),
     ]
+  }
 
-    fleet.forEach(ship => {
+  private RandomizeShips(cells: any[]) {
+    this.getFleet().forEach(ship => {
       this.CreateShip(ship, cells);
     });
   }
@@ -64,8 +66,8 @@ export class GameService {
       let firstCell = i == 0;
       if (!firstCell) {
         // in case of Ship type L
-        if(ship.type === ShipType.L && (i+1) == ship.length) {
-          direction = this.Rotate90degrees(direction);          
+        if (ship.type === ShipType.L && (i + 1) == ship.length) {
+          direction = this.Rotate90degrees(direction);
         }
         coordinates = this.DetermineNextCellCoordinates(coordinates.row, coordinates.col, direction);
 
@@ -202,7 +204,7 @@ export class GameService {
     return reversed;
   }
 
-  private Rotate90degrees(direction: Direction){
+  private Rotate90degrees(direction: Direction) {
     let rotated;
     switch (direction) {
       case Direction.up: {

@@ -1,12 +1,19 @@
 <div class="aligner">
-<h1>Battle ship game</h1>
-<div class="game">
-    <div class="board">
-        <table>
-            <tr *ngFor="let row of game.board.cells; let j = index">
-              <td *ngFor="let col of row; let k = index">{{col.isShip ? "X" : "💀"}}</td>
-          </tr>
-        </table>
+    <div class="game aligner-item">
+        <h1>Battle ship</h1>
+        <h2>Game Status: {{game.status}}</h2>
+        <p>Player Score: {{game.board.player.score}}</p>
+        <p>Player missed: {{game.board.player.missed}}</p>
+        <button *ngIf="game.status == 'finished'" (click)="newGame()">Start new game</button>
+        <div class="board">
+            <table>
+                <tr *ngFor="let row of game.board.cells; let j = index">
+                    <td class="cell" 
+                        [ngClass]="[col.used ? (col.isShip ? 'damaged' : 'used'): 'clear']" 
+                        *ngFor="let col of row; let k = index"
+                        (click)="Shoot(col)">{{col.used && col.isShip ? "💀" : ""}}</td>
+                </tr>
+            </table>
+        </div>
     </div>
-</div>
 </div>

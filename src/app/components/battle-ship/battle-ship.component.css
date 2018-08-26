@@ -1,4 +1,54 @@
 .aligner {
+    display: flex;
     align-items: center;
     justify-content: center;
+}
+
+h1, h2 {
+    line-height: 1.35;
+    font-weight: normal;
+    margin-bottom: .5em;
+    font-family: Arial,"Helvetica Neue",Helvetica,sans-serif
+}
+
+.aligner-item {
+    max-width: 50%;
+}
+
+.cell {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    border: 1px solid #ddd;
+    text-align: center;
+    width: 50px;
+    height: 50px;
+}
+
+.clear {
+    background: #f6f8f9;
+}
+
+.used {
+    background: #ddd;
+}
+
+.damaged {
+    background:red;
+}
+
+td {
+    cursor: pointer;
+}
+
+button {
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
 }
