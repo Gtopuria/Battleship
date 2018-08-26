@@ -5,7 +5,6 @@ import { Game } from '../models/game';
 import { Board } from '../models/board';
 import { Player } from '../models/player';
 import { Direction } from '../models/direction';
-import { Direct } from 'protractor/built/driverProviders';
 
 @Injectable({
   providedIn: 'root'
@@ -66,8 +65,7 @@ export class GameService {
       if (!firstCell) {
         // in case of Ship type L
         if(ship.type === ShipType.L && (i+1) == ship.length) {
-          direction = this.ChangeDirectionCourse(direction);
-          console.log('type l Last cordinates', coordinates.row, coordinates.col);
+          direction = this.Rotate90degrees(direction);          
         }
         coordinates = this.DetermineNextCellCoordinates(coordinates.row, coordinates.col, direction);
 
@@ -184,47 +182,47 @@ export class GameService {
   private ReverseDirection(direction: Direction) {
     let reversed;
     switch (direction) {
-      case 0: {
-        reversed = 1;
+      case Direction.up: {
+        reversed = Direction.down;
         break;
       }
-      case 1: {
-        reversed = 0;
+      case Direction.down: {
+        reversed = Direction.up;
         break;
       }
-      case 2: {
-        reversed = 3;
+      case Direction.left: {
+        reversed = Direction.right;
         break;
       }
-      case 3: {
-        reversed = 2;
+      case Direction.right: {
+        reversed = Direction.left;
         break;
       }
     }
     return reversed;
   }
 
-  private ChangeDirectionCourse(direction: Direction){
-    let courseChanged;
+  private Rotate90degrees(direction: Direction){
+    let rotated;
     switch (direction) {
-      case 0: {
-        courseChanged = 3
+      case Direction.up: {
+        rotated = Direction.right
         break;
       }
-      case 1: {
-        courseChanged = 2;
+      case Direction.down: {
+        rotated = Direction.left
         break;
       }
-      case 2: {
-        courseChanged = 0;
+      case Direction.left: {
+        rotated = Direction.up;
         break;
       }
-      case 3: {
-        courseChanged = 1;
+      case Direction.right: {
+        rotated = Direction.down;
         break;
       }
     }
-    return courseChanged;
+    return rotated;
   }
 
   private randomIntFromInterval(max: number) {
