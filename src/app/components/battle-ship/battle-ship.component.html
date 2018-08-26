@@ -11,7 +11,7 @@
                     <td class="cell" 
                         [ngClass]="[col.used ? (col.isShip ? 'damaged' : 'used'): 'clear']" 
                         *ngFor="let col of row; let k = index"
-                        (click)="Shoot(col)">{{col.used && col.isShip ? "💀" : ""}}</td>
+                        (click)="Shoot(col)">{{col.used && col.isShip && col.isDestroyed ? "💀" : ""}}</td>
                 </tr>
             </table>
         </div>

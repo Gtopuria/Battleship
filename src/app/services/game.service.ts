@@ -23,8 +23,8 @@ export class GameService {
         cells[i][j] = new Cell(i, j);
       }
     }
-    this.RandomizeShips(cells);
-    return new Game(new Board(cells, new Player(), this.getFleet()), "In progress");
+    const ships = this.RandomizeShips(cells);
+    return new Game(new Board(cells, new Player(), ships), "In progress");
   }
 
   private getFleet() {
@@ -33,17 +33,20 @@ export class GameService {
     // 1 - L shaped 4 cell ship
     // 1 - I shaped 4 cell ship
     return [
-      new Ship({ length: 4, type: ShipType.L }),
-      new Ship({ length: 4, type: ShipType.Dot }),
-      new Ship({ length: 1, type: ShipType.Dot }),
-      new Ship({ length: 1, type: ShipType.Dot }),
+      new Ship({ length: 4, type: ShipType.L, cells: []}),
+      new Ship({ length: 4, type: ShipType.Dot, cells: [] }),
+      new Ship({ length: 1, type: ShipType.Dot, cells: [] }),
+      new Ship({ length: 1, type: ShipType.Dot, cells: [] }),
     ]
   }
 
   private RandomizeShips(cells: any[]) {
+    let ships = [];
     this.getFleet().forEach(ship => {
       this.CreateShip(ship, cells);
+      ships.push(ship);
     });
+    return ships;
   }
 
   private CreateShip(ship: Ship, cells: Cell[][]) {
@@ -87,6 +90,7 @@ export class GameService {
     if (isPlaced) {
       toBeDeployedShipCoordinates.forEach(coordinate => {
         cells[coordinate.row][coordinate.col].isShip = true;
+        ship.cells.push(cells[coordinate.row][coordinate.col]);
       });
     }
     return isPlaced;

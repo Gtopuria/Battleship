@@ -29,14 +29,14 @@ export class BattleShipComponent implements OnInit {
       this.toast.warning('Cell is already used');
       return;
     }
-    if (cell.isShip) {
-      this.game.Shoot(cell);
-      this.toast.success('Hit');
-
-    } else {
-      this.game.board.player.IncreaseMissCount();
-    }
     cell.used = true;
+    if (cell.isShip) {
+      this.game.Hit(cell);
+      this.toast.success('Hit');
+    } else {
+      this.game.Miss();
+    }
+
   }
 
   newGame() {

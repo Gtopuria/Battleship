@@ -3,10 +3,10 @@ export class Player {
     missed: number = 0;
 
     public IncreaseScore(){
-        this.score =+ 1;
+        this.score = this.score + 1;
     }
 
     public IncreaseMissCount(){
-        this.missed =+ 1;
+        this.missed = this.missed + 1;
     }
 }
