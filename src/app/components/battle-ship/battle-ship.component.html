@@ -1,0 +1,12 @@
+<div class="aligner">
+<h1>Battle ship game</h1>
+<div class="game">
+    <div class="board">
+        <table>
+            <tr *ngFor="let row of game.board.cells; let j = index">
+              <td *ngFor="let col of row; let k = index">{{col.isShip ? "X" : "💀"}}</td>
+          </tr>
+        </table>
+    </div>
+</div>
+</div>
