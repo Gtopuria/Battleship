@@ -22,7 +22,7 @@ export class BattleShipComponent implements OnInit {
   }
 
   Shoot(cell: Cell) {
-    if(this.game.status == 'finished'){
+    if (this.game.status == 'finished') {
       this.toast.info('Game is Over, start new game');
     }
     if (cell.used == true) {
@@ -30,17 +30,16 @@ export class BattleShipComponent implements OnInit {
       return;
     }
     if (cell.isShip) {
-      this.game.board.player.score += 1;
+      this.game.Shoot(cell);
       this.toast.success('Hit');
-      this.game.CheckScore();
 
     } else {
-      this.game.board.player.missed += 1;
+      this.game.board.player.IncreaseMissCount();
     }
     cell.used = true;
   }
 
-  newGame(){
+  newGame() {
     this.game = this.gameService.CreateGame();
   }
 

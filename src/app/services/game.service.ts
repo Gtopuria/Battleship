@@ -20,7 +20,7 @@ export class GameService {
     for (let i: number = 0; i < this.size; i++) {
       cells[i] = [];
       for (let j: number = 0; j < this.size; j++) {
-        cells[i][j] = new Cell();
+        cells[i][j] = new Cell(i, j);
       }
     }
     this.RandomizeShips(cells);
