@@ -1,5 +1,5 @@
 export class Ship {
-    lenght: number;
+    length: number;
     type: ShipType;
 
     constructor(init) {

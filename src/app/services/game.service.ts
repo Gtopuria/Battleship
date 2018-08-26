@@ -34,10 +34,10 @@ export class GameService {
     // 1 - L shaped 4 cell ship
     // 1 - I shaped 4 cell ship
     const fleet = [
-      new Ship({ lenght: 4, type: ShipType.L }),
-      new Ship({ lenght: 4, type: ShipType.Dot }),
-      new Ship({ lenght: 1, type: ShipType.Dot }),
-      new Ship({ lenght: 1, type: ShipType.Dot }),
+      new Ship({ length: 4, type: ShipType.L }),
+      new Ship({ length: 4, type: ShipType.Dot }),
+      new Ship({ length: 1, type: ShipType.Dot }),
+      new Ship({ length: 1, type: ShipType.Dot }),
     ]
 
     fleet.forEach(ship => {
@@ -59,12 +59,18 @@ export class GameService {
     //place actual ship
     let isPlaced = true;
     let coordinates = { row, col };
-    let toBeDeployedShips = [];
-    for (let i: number = 0; i < ship.lenght; i++) {
+    let toBeDeployedShipCoordinates = [];
+    for (let i: number = 0; i < ship.length; i++) {
       // moving towards direction
       let firstCell = i == 0;
       if (!firstCell) {
+        // in case of Ship type L
+        if(ship.type === ShipType.L && (i+1) == ship.length) {
+          direction = this.ChangeDirectionCourse(direction);
+          console.log('type l Last cordinates', coordinates.row, coordinates.col);
+        }
         coordinates = this.DetermineNextCellCoordinates(coordinates.row, coordinates.col, direction);
+
       }
       const areValid = this.validateCoordinates(coordinates);
       if (!areValid) {
@@ -76,10 +82,10 @@ export class GameService {
         isPlaced = false;
         return;
       }
-      toBeDeployedShips.push(coordinates);
+      toBeDeployedShipCoordinates.push(coordinates);
     }
     if (isPlaced) {
-      toBeDeployedShips.forEach(coordinate => {
+      toBeDeployedShipCoordinates.forEach(coordinate => {
         cells[coordinate.row][coordinate.col].isShip = true;
       });
     }
@@ -150,7 +156,7 @@ export class GameService {
     // check surroundings
     let isRoom = true;
     const checkDirection = firstCell ? direction : this.ReverseDirection(direction);
-    // checking up,down,left,right
+    // checking up,down,left,right,upleft,upright,downleft,downright
     Object.values(Direction).forEach(item => {
       const enumDirection = Direction[Direction[item]];
       if (enumDirection == checkDirection && !firstCell) {
@@ -165,8 +171,6 @@ export class GameService {
         }
       }
     });
-    // checking on +1 diagonals
-    
     return isRoom;
   }
 
@@ -198,6 +202,29 @@ export class GameService {
       }
     }
     return reversed;
+  }
+
+  private ChangeDirectionCourse(direction: Direction){
+    let courseChanged;
+    switch (direction) {
+      case 0: {
+        courseChanged = 3
+        break;
+      }
+      case 1: {
+        courseChanged = 2;
+        break;
+      }
+      case 2: {
+        courseChanged = 0;
+        break;
+      }
+      case 3: {
+        courseChanged = 1;
+        break;
+      }
+    }
+    return courseChanged;
   }
 
   private randomIntFromInterval(max: number) {
